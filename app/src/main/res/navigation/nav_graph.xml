@@ -20,4 +20,5 @@
         android:name="com.example.greyandroidengineertechnicalassessment.UsersFragment"
         android:label="Users"
         tools:layout="@layout/fragment_users" />
+
 </navigation>
