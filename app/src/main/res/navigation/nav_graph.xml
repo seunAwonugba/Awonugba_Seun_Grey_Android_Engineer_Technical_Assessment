@@ -9,7 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.example.greyandroidengineertechnicalassessment.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_usersFragment"
+            app:destination="@id/usersFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_repositoryFragment"
+            app:destination="@id/repositoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/repositoryFragment"
         android:name="com.example.greyandroidengineertechnicalassessment.RepositoryFragment"

@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.greyandroidengineertechnicalassessment.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
 
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeFragment,
@@ -38,9 +39,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        NavigationUI.setupWithNavController(bottomNavigationView, navController)
+        bottomNavigationView.setupWithNavController(navController)
 
-//        bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            NavigationUI.onNavDestinationSelected(it, Navigation.findNavController(binding.fragmentContainerView))
+            Navigation.findNavController(binding.fragmentContainerView)
+                .popBackStack(it.itemId, inclusive = false)
+            true
+        }
 
     }
 
