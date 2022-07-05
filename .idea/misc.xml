@@ -5,6 +5,8 @@
       <map>
         <entry key="app/src/main/res/drawable/github.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/grey_logo.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/group_678.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/group_679.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/home_selected.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/home_selector.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/icons8_github.xml" value="0.125" />
@@ -12,8 +14,9 @@
         <entry key="app/src/main/res/drawable/user.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/users_selector.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/vector.xml" value="0.1555" />
+        <entry key="app/src/main/res/font/manrope_extrabold.xml" value="0.17604166666666668" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28804347826086957" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_repository.xml" value="0.28804347826086957" />
         <entry key="app/src/main/res/layout/fragment_splash_screen.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_starting_screen.xml" value="0.1" />
