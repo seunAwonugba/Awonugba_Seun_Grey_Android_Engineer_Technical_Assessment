@@ -8,16 +8,16 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.greyandroidengineertechnicalassessment.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/repositoryFragment"
         android:name="com.example.greyandroidengineertechnicalassessment.RepositoryFragment"
-        android:label="fragment_repository"
+        android:label="Repository"
         tools:layout="@layout/fragment_repository" />
     <fragment
         android:id="@+id/usersFragment"
         android:name="com.example.greyandroidengineertechnicalassessment.UsersFragment"
-        android:label="fragment_users"
+        android:label="Users"
         tools:layout="@layout/fragment_users" />
 </navigation>
