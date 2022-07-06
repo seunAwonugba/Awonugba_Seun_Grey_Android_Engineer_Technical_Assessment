@@ -9,7 +9,7 @@
 
     <item
         android:title="Repositories"
-        android:icon="@drawable/search_normal"
+        android:icon="@drawable/repo_selector"
         android:id="@+id/repositoryFragment"
         />
 
