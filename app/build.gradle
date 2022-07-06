@@ -1,10 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
 }
 
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+
 
 android {
     compileSdk 32
@@ -79,4 +81,12 @@ dependencies {
     //splash screen
     implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
 
+    //hilt
+    implementation 'com.google.dagger:hilt-android:2.42'
+    kapt 'com.google.dagger:hilt-compiler:2.42'
+
+}
+
+kapt {
+    correctErrorTypes true
 }

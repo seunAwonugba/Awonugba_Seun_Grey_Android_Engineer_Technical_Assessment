@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.example.greyandroidengineertechnicalassessment.databinding.FragmentRepositoryBinding
 import com.example.greyandroidengineertechnicalassessment.databinding.FragmentUsersBinding
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RepositoryFragment : Fragment(R.layout.fragment_repository) {
 
     private var _binding: FragmentRepositoryBinding? = null

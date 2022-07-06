@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.greyandroidengineertechnicalassessment.databinding.FragmentHomeBinding
 import com.example.greyandroidengineertechnicalassessment.databinding.FragmentUsersBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
