@@ -37,7 +37,7 @@ class SearchUsersViewModel @Inject constructor(
         _state.postValue(handleSearchUsersResponse(response))
     }
 
-    fun initialStateRes() = viewModelScope.launch {
+    private fun initialStateRes() = viewModelScope.launch {
         _state.postValue(Resource.Initial())
     }
 

@@ -7,7 +7,6 @@ import android.widget.AbsListView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greyandroidengineertechnicalassessment.R
@@ -22,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClickListener {
+class UsersFragment : Fragment(R.layout.fragment_users){
 
     private lateinit var usersAdapter: UsersAdapter
     private val viewModel : SearchUsersViewModel by viewModels()
@@ -35,6 +34,11 @@ class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClic
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentUsersBinding.bind(view)
         setUpRecyclerView()
+
+        usersAdapter.setOnItemClickListener {
+            val args = UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(it)
+            findNavController().navigate(args)
+        }
 
 
         //state when user clicks search button
@@ -60,21 +64,21 @@ class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClic
                                 hideErrorRes()
 
                                 response.data.let { dtoData ->
-                                    usersAdapter.usersResponse = dtoData.items.toList().map {
+                                    usersAdapter.differ.submitList(dtoData.items.toList().map {
                                         UsersResponse(
                                             id = it.id ?: 0,
-                                            login = it.login?: "",
-                                            profilePicture = it.avatar_url?:""
+                                            login = it.login ?: "",
+                                            profilePicture = it.avatar_url ?: "",
+                                            loginTwo = it.login ?: ""
                                         )
-
-                                    }
+                                    })
                                     val totalPages = dtoData.total_count / QUERY_PAGE_SIZE + 2
                                     isLastPage = viewModel.pageNumber == totalPages
                                 }
                             }else{
                                 hideInitialStateRes()
                                 hideProgressBar()
-                                usersAdapter.usersResponse = emptyList()
+                                usersAdapter.differ.submitList(emptyList())
                                 showErrorRes()
 
                             }
@@ -98,7 +102,6 @@ class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClic
                             hideErrorRes()
 
                         }
-
                     }
                 })
             }
@@ -107,7 +110,7 @@ class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClic
     }
 
     private fun setUpRecyclerView(){
-        usersAdapter = UsersAdapter(this)
+        usersAdapter = UsersAdapter()
         binding.recyclerView.apply {
             adapter = usersAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -145,16 +148,12 @@ class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClic
         binding.errorText.visibility = View.GONE
     }
 
-    override fun onNavToUserDetails(position: Int) {
-        findNavController().navigate(R.id.action_usersFragment_to_userDetailsFragment)
-    }
-
 
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
 
-    var scrollListener = object : RecyclerView.OnScrollListener(){
+    private var scrollListener = object : RecyclerView.OnScrollListener(){
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
 

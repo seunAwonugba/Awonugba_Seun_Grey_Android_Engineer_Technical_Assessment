@@ -1,29 +1,26 @@
 package com.example.greyandroidengineertechnicalassessment.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.greyandroidengineertechnicalassessment.R
 import com.example.greyandroidengineertechnicalassessment.databinding.UsersListItemBinding
 import com.example.greyandroidengineertechnicalassessment.view.data.UsersResponse
 
 
-class UsersAdapter(
-    private val onItemClickListener: OnItemClickListener
-) : RecyclerView.Adapter<UsersAdapter.MyViewHolder>() {
+class UsersAdapter : RecyclerView.Adapter<UsersAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(
-        val binding : UsersListItemBinding,
-        onItemClickListener: OnItemClickListener
-    ) : RecyclerView.ViewHolder(binding.root){
+    inner class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
 
-        init {
-            binding.card.setOnClickListener {
-                onItemClickListener.onNavToUserDetails(adapterPosition)
-            }
-        }
+        var profileImage : ImageView = itemView.findViewById(R.id.user_profile_image)
+        var login : TextView = itemView.findViewById(R.id.login)
+        var loginTwo : TextView = itemView.findViewById(R.id.login_two)
     }
 
     private val diffCallBack = object : DiffUtil.ItemCallback<UsersResponse>(){
@@ -44,41 +41,40 @@ class UsersAdapter(
 
     }
 
-    private val differ = AsyncListDiffer(this, diffCallBack)
-    var usersResponse : List<UsersResponse>
-        get() = differ.currentList
-        set(value) {
-            differ.submitList(value)
-        }
+    val differ = AsyncListDiffer(this, diffCallBack)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
-            UsersListItemBinding.inflate(
-                LayoutInflater.from(parent.context),
+            LayoutInflater.from(parent.context).inflate(
+                R.layout. users_list_item,
                 parent,
                 false
-            ),
-            onItemClickListener
+            )
         )
 
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentUser = usersResponse[position]
-
-        holder.binding.apply {
-            userProfileImage.load(currentUser.profilePicture)
-            login.text = currentUser.login
-            loginTwo.text = currentUser.login
-
+        val usersResponse = differ.currentList[position]
+        holder.profileImage.load(usersResponse.profilePicture)
+        holder.login.text = usersResponse.login
+        holder.loginTwo.text = usersResponse.login
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let {
+                it(usersResponse)
+            }
         }
+
     }
 
     override fun getItemCount(): Int {
-        return usersResponse.size
+        return differ.currentList.size
     }
 
-    interface OnItemClickListener{
-        fun onNavToUserDetails(position: Int)
+    private var onItemClickListener : ((UsersResponse) -> Unit)?  = null
+
+    fun setOnItemClickListener(listener : (UsersResponse) -> Unit){
+        onItemClickListener = listener
     }
 }

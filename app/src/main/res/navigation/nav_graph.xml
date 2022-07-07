@@ -35,6 +35,10 @@
         android:id="@+id/userDetailsFragment"
         android:name="com.example.greyandroidengineertechnicalassessment.view.UserDetailsFragment"
         android:label="fragment_user_details"
-        tools:layout="@layout/fragment_user_details" />
+        tools:layout="@layout/fragment_user_details" >
+        <argument
+            android:name="user"
+            app:argType="com.example.greyandroidengineertechnicalassessment.view.data.UsersResponse" />
+    </fragment>
 
 </navigation>

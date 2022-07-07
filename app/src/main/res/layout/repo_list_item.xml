@@ -21,7 +21,7 @@
             android:padding="8dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
+                android:id="@+id/details_profile_image"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:scaleType="centerCrop"
@@ -37,9 +37,9 @@
                 android:layout_marginStart="16dp"
                 android:text="firstName"
                 android:textColor="#62006A"
-                app:layout_constraintBottom_toBottomOf="@+id/profile_image"
-                app:layout_constraintStart_toEndOf="@+id/profile_image"
-                app:layout_constraintTop_toTopOf="@+id/profile_image"
+                app:layout_constraintBottom_toBottomOf="@+id/details_profile_image"
+                app:layout_constraintStart_toEndOf="@+id/details_profile_image"
+                app:layout_constraintTop_toTopOf="@+id/details_profile_image"
                 android:singleLine="true" />
 
             <TextView
@@ -49,7 +49,7 @@
                 android:layout_marginTop="16dp"
                 android:text="These are random words that will be replaced in due time. Config files for my github profile"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+                app:layout_constraintTop_toBottomOf="@+id/details_profile_image" />
 
             <TextView
                 android:id="@+id/language"

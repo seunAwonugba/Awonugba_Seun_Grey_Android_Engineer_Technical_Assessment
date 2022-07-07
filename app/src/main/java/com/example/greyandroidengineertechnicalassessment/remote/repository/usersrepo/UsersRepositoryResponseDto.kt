@@ -1,0 +1,3 @@
+package com.example.greyandroidengineertechnicalassessment.remote.repository.usersrepo
+
+class UsersRepositoryResponseDto : ArrayList<UsersRepositoryResponseDtoItem>()
