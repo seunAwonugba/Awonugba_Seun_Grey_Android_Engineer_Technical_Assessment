@@ -20,7 +20,9 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun searchUsers(query: String, pageNumber: Int): Response<UsersResponseDto> {
-        TODO("Not yet implemented")
+        return gitHubWebService.searchUsers(
+            query, pageNumber
+        )
     }
 
 

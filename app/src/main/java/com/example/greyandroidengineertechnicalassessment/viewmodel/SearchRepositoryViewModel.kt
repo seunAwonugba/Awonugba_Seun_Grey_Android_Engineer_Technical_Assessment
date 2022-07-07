@@ -23,15 +23,16 @@ class SearchRepositoryViewModel @Inject constructor(
     var pageNumber = 1
 
 
-    init {
-        searchGitHubRepository("seun")
-    }
 
 
     fun searchGitHubRepository(query : String) = viewModelScope.launch {
         _state.postValue(Resource.Loading())
         val response = mainRepository.searchRepository(query = query, pageNumber = pageNumber)
         _state.postValue(handleSearchRepoResponse(response = response))
+    }
+
+    fun initialSetUp() = viewModelScope.launch {
+        _state.postValue(Resource.Initial())
     }
 
     private fun handleSearchRepoResponse(response : Response<RepositoryResponseDto>) : Resource<RepositoryResponseDto> {

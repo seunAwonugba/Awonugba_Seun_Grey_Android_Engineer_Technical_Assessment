@@ -31,56 +31,60 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentRepositoryBinding.bind(view)
-        binding.editText.addTextChangedListener(buttonState)
         setUpRecyclerView()
 
-        //query backend
-//        binding.button3.setOnClickListener {
-//
-//            if (query.isEmpty()){
-//                Snackbar.make(
-//                    binding.root, "input field cannot be empty", Snackbar.LENGTH_LONG
-//                ).show()
-//            }
-//
-//            if (query.isNotEmpty()){
-//                hideEmptyStateRes()
-//            }
-//        }
 
-
-
-        //observe state
-        viewModel.state.observe(viewLifecycleOwner, Observer { response ->
-            when(response){
-                is Resource.Success -> {
-                    hideEmptyStateRes()
-
-                    response.data?.let { data ->
-                        gitHubRepoAdapter.differ.submitList(data.items?.map {
-                            RepositoryResponse(
-                                id = it.id ?: 0,
-                                fullName = it.full_name.toString(),
-                                profilePicture = it.owner?.avatar_url ?: "",
-                                star = it.stargazers_count ?: 0,
-                                language = it.language ?: "" ,
-                                description = it.description ?: "",
-                                topics = it.topics ?: emptyList()
-                            )
-                        })
+        //observe state when button is clicked
+        binding.button3.setOnClickListener {
+            if (binding.editText.text.trim().isEmpty()){
+                Snackbar.make(binding.root, "Input field cannot be empty", Snackbar.LENGTH_LONG).show()
+                return@setOnClickListener
+            }else{
+                viewModel.searchGitHubRepository(binding.editText.text.trim().toString())
+                viewModel.state.observe(viewLifecycleOwner, Observer { response ->
+                    when(response){
+                        is Resource.Initial -> {
+                            showInitialStateRes()
+                            hideErrorStateRes()
+                            hideProgressBar()
+                        }
+                        is Resource.Success -> {
+                            hideInitialStateRes()
+                            hideProgressBar()
+                            hideErrorStateRes()
+                            response.data?.let { data ->
+                                gitHubRepoAdapter.differ.submitList(data.items?.map {
+                                    RepositoryResponse(
+                                        id = it.id ?: 0,
+                                        fullName = it.full_name.toString(),
+                                        profilePicture = it.owner?.avatar_url ?: "",
+                                        star = it.stargazers_count ?: 0,
+                                        language = it.language ?: "" ,
+                                        description = it.description ?: "",
+                                        topics = it.topics ?: emptyList()
+                                    )
+                                })
+                            }
+                        }
+                        is Resource.Error -> {
+                            hideInitialStateRes()
+                            hideProgressBar()
+                            response.message?.let {
+                                Snackbar.make(binding.root, "An error occurred: Caused by: $it", Snackbar.LENGTH_LONG).show()
+                            }
+                            if (response.message == "Repository not found"){
+                                showErrorStateRes()
+                            }
+                        }
+                        is Resource.Loading -> {
+                            showProgressBar()
+                            hideInitialStateRes()
+                            hideErrorStateRes()
+                        }
                     }
-                }
-                is Resource.Error -> {
-                    hideEmptyStateRes()
-                    response.message?.let {
-                        Snackbar.make(binding.root, "An error occurred: Caused by: $it", Snackbar.LENGTH_LONG).show()
-                    }
-                }
-                is Resource.Loading -> {
-                    showEmptyStateRes()
-                }
+                })
             }
-        })
+        }
 
 
 
@@ -95,14 +99,32 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
 
     }
 
-    private fun hideEmptyStateRes(){
+    fun showProgressBar(){
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar(){
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun hideInitialStateRes(){
         binding.emptyStateImage.visibility = View.GONE
         binding.emptyStateText.visibility = View.GONE
     }
 
-    private fun showEmptyStateRes(){
+    private fun showInitialStateRes(){
         binding.emptyStateImage.visibility = View.VISIBLE
         binding.emptyStateText.visibility = View.VISIBLE
+    }
+
+    private fun showErrorStateRes(){
+        binding.emptyStateImage.visibility = View.VISIBLE
+        binding.errTxt.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorStateRes(){
+        binding.emptyStateImage.visibility = View.GONE
+        binding.errTxt.visibility = View.GONE
     }
 
     override fun onDestroy() {
@@ -110,15 +132,15 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         _binding = null
     }
 
-    private val buttonState : TextWatcher = object : TextWatcher{
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            val query = binding.editText.text.toString().trim()
-            binding.button3.isEnabled = query.isNotEmpty()
-        }
-
-        override fun afterTextChanged(p0: Editable?) {}
-
-    }
+//    private val buttonState : TextWatcher = object : TextWatcher{
+//        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+//
+//        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            val query = binding.editText.text.toString().trim()
+//            binding.button3.isEnabled = query.isNotEmpty()
+//        }
+//
+//        override fun afterTextChanged(p0: Editable?) {}
+//
+//    }
 }

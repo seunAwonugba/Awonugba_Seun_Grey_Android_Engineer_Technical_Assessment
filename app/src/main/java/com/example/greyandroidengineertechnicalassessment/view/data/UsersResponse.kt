@@ -1,6 +1,8 @@
 package com.example.greyandroidengineertechnicalassessment.view.data
 
 data class UsersResponse(
-    val usersName : String,
+    val id: Int,
+    val login : String,
     val profilePicture : String,
+//    val topic : List<String> = emptyList()
 )

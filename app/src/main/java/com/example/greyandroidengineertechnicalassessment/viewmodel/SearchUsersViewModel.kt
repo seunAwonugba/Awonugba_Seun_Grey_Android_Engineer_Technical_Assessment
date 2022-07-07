@@ -22,10 +22,19 @@ class SearchUsersViewModel @Inject constructor(
 
     var pageNumber = 1
 
+    init {
+        initialStateRes()
+        searchUsers("seun")
+    }
+
     fun searchUsers(query : String) = viewModelScope.launch {
         _state.postValue(Resource.Loading())
         val response = mainRepository.searchUsers(query, pageNumber)
         _state.postValue(handleSearchUsersResponse(response))
+    }
+
+    fun initialStateRes() = viewModelScope.launch {
+        _state.postValue(Resource.Initial())
     }
 
 
@@ -36,7 +45,7 @@ class SearchUsersViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }else if (response.code() == 404){
-            return Resource.Error("Repository not found")
+            return Resource.Error("User not found")
         }else if (response.code() == 500){
             return Resource.Error("Internal server error")
         }
