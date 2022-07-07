@@ -1,4 +1,4 @@
-package com.example.greyandroidengineertechnicalassessment.data
+package com.example.greyandroidengineertechnicalassessment.view.data
 
 data class UsersResponse(
     val usersName : String,

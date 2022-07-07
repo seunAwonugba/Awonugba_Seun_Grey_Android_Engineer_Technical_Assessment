@@ -1,6 +1,6 @@
-package com.example.greyandroidengineertechnicalassessment.repository
+package com.example.greyandroidengineertechnicalassessment.remote.users
 
-data class Owner(
+data class Item(
     val avatar_url: String,
     val events_url: String,
     val followers_url: String,
@@ -14,6 +14,7 @@ data class Owner(
     val organizations_url: String,
     val received_events_url: String,
     val repos_url: String,
+    val score: Int,
     val site_admin: Boolean,
     val starred_url: String,
     val subscriptions_url: String,

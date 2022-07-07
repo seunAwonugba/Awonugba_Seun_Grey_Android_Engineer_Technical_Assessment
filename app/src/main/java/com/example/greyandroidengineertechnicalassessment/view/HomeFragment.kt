@@ -1,13 +1,11 @@
-package com.example.greyandroidengineertechnicalassessment
+package com.example.greyandroidengineertechnicalassessment.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.greyandroidengineertechnicalassessment.R
 import com.example.greyandroidengineertechnicalassessment.databinding.FragmentHomeBinding
-import com.example.greyandroidengineertechnicalassessment.databinding.FragmentUsersBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

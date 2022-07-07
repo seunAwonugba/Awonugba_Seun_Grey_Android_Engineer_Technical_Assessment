@@ -1,9 +1,9 @@
-package com.example.greyandroidengineertechnicalassessment.api
+package com.example.greyandroidengineertechnicalassessment.remote.api
 
-import com.example.greyandroidengineertechnicalassessment.Constants.REPO_SEARCH_END_POINT
-import com.example.greyandroidengineertechnicalassessment.Constants.USERS_SEARCH_END_POINT
-import com.example.greyandroidengineertechnicalassessment.repository.RepositoryResponseDto
-import com.example.greyandroidengineertechnicalassessment.users.UsersResponseDto
+import com.example.greyandroidengineertechnicalassessment.utils.Constants.REPO_SEARCH_END_POINT
+import com.example.greyandroidengineertechnicalassessment.utils.Constants.USERS_SEARCH_END_POINT
+import com.example.greyandroidengineertechnicalassessment.remote.repository.RepositoryResponseDto
+import com.example.greyandroidengineertechnicalassessment.remote.users.UsersResponseDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

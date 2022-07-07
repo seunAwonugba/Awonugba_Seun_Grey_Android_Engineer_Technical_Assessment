@@ -1,4 +1,4 @@
-package com.example.greyandroidengineertechnicalassessment.users
+package com.example.greyandroidengineertechnicalassessment.remote.users
 
 data class UsersResponseDto(
     val incomplete_results: Boolean,

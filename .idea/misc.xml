@@ -20,10 +20,11 @@
         <entry key="app/src/main/res/font/manrope_extrabold.xml" value="0.17604166666666668" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/fragment_repository.xml" value="0.28804347826086957" />
+        <entry key="app/src/main/res/layout/fragment_repository.xml" value="0.20195770263671875" />
         <entry key="app/src/main/res/layout/fragment_splash_screen.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_starting_screen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_users.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/repo_list_item.xml" value="0.335" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2953125" />
       </map>
     </option>

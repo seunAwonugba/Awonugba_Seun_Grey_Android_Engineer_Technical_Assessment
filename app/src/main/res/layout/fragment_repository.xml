@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".RepositoryFragment">
+    tools:context=".view.RepositoryFragment">
 
 
     <TextView
@@ -28,6 +28,7 @@
         android:drawableLeft="@drawable/search_normal"
         android:background="@drawable/app_edit_text"
         android:drawablePadding="8dp"
+        android:maxLines="1"
         android:paddingLeft="16dp"
         android:hint="Search for repositories..."
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,10 +41,42 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Search"
+        android:enabled="false"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="@+id/editText"
         app:layout_constraintEnd_toEndOf="@+id/editText"
         app:layout_constraintTop_toTopOf="@+id/editText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_repo_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+    <ImageView
+        android:id="@+id/empty_state_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/no_result"
+        app:layout_constraintBottom_toBottomOf="@+id/search_repo_rv"
+        app:layout_constraintEnd_toEndOf="@+id/search_repo_rv"
+        app:layout_constraintStart_toStartOf="@+id/search_repo_rv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/empty_state_text"
+        android:layout_width="242sp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Search Github for repositories, issues and pull requests!"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/search_repo_rv"
+        app:layout_constraintStart_toStartOf="@+id/search_repo_rv"
+        app:layout_constraintTop_toBottomOf="@+id/empty_state_image" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
