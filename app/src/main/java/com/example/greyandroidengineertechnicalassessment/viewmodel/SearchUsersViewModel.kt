@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.greyandroidengineertechnicalassessment.remote.repository.RepositoryResponseDto
 import com.example.greyandroidengineertechnicalassessment.remote.users.UsersResponseDto
 import com.example.greyandroidengineertechnicalassessment.repository.MainRepository
 import com.example.greyandroidengineertechnicalassessment.utils.Resource
@@ -21,6 +22,9 @@ class SearchUsersViewModel @Inject constructor(
     var state : LiveData<Resource<UsersResponseDto>> = _state
 
     var pageNumber = 1
+
+    var searchedUsersResponse : UsersResponseDto? = null
+
 
     init {
         initialStateRes()
@@ -42,7 +46,19 @@ class SearchUsersViewModel @Inject constructor(
     private fun handleSearchUsersResponse(response : Response<UsersResponseDto>) : Resource<UsersResponseDto> {
         if (response.isSuccessful){
             response.body()?.let {
-                return Resource.Success(it)
+                //increase page number if response is successful
+                pageNumber++
+
+                if (searchedUsersResponse == null){
+                    searchedUsersResponse = it
+                }else{
+                    val oldData =searchedUsersResponse?.items
+                    val newData = it.items
+                    oldData?.addAll(newData)
+                }
+
+
+                return Resource.Success(searchedUsersResponse ?: it)
             }
         }else if (response.code() == 404){
             return Resource.Error("User not found")

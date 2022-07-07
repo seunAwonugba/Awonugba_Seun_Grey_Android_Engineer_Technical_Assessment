@@ -22,6 +22,8 @@ class SearchRepositoryViewModel @Inject constructor(
 
     var pageNumber = 1
 
+    var searchedRepoResponse : RepositoryResponseDto? = null
+
 
 
 
@@ -31,14 +33,24 @@ class SearchRepositoryViewModel @Inject constructor(
         _state.postValue(handleSearchRepoResponse(response = response))
     }
 
-    fun initialSetUp() = viewModelScope.launch {
-        _state.postValue(Resource.Initial())
-    }
-
     private fun handleSearchRepoResponse(response : Response<RepositoryResponseDto>) : Resource<RepositoryResponseDto> {
         if (response.isSuccessful){
             response.body()?.let {
-                return Resource.Success(it)
+                //increase page number if response is successful
+                pageNumber++
+
+                if (searchedRepoResponse == null){
+                    searchedRepoResponse = it
+                }else{
+                    val oldData =searchedRepoResponse?.items
+                    val newData = it.items
+                    if (newData != null) {
+                        oldData?.addAll(newData)
+                    }
+                }
+
+
+                return Resource.Success(searchedRepoResponse ?: it)
             }
         }else if (response.code() == 404){
             return Resource.Error("Repository not found")

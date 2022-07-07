@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment,
                 R.id.repositoryFragment,
-                R.id.usersFragment -> {
+                R.id.usersFragment,
+                R.id.userDetailsFragment-> {
                     showBottomNav()
                 }
                 else -> hideBottomNav()

@@ -3,14 +3,18 @@ package com.example.greyandroidengineertechnicalassessment.view
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.AbsListView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.greyandroidengineertechnicalassessment.R
 import com.example.greyandroidengineertechnicalassessment.adapter.UsersAdapter
 import com.example.greyandroidengineertechnicalassessment.databinding.FragmentUsersBinding
+import com.example.greyandroidengineertechnicalassessment.utils.Constants
+import com.example.greyandroidengineertechnicalassessment.utils.Constants.QUERY_PAGE_SIZE
 import com.example.greyandroidengineertechnicalassessment.utils.Resource
 import com.example.greyandroidengineertechnicalassessment.view.data.UsersResponse
 import com.example.greyandroidengineertechnicalassessment.viewmodel.SearchUsersViewModel
@@ -49,30 +53,43 @@ class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClic
                         }
 
                         is Resource.Success -> {
-                            hideInitialStateRes()
-                            hideProgressBar()
-                            hideErrorRes()
-                            response.data?.let { dtoData ->
-                                usersAdapter.usersResponse = dtoData.items.map {
-                                    UsersResponse(
-                                        id = it.id ?: 0,
-                                        login = it.login?: "",
-                                        profilePicture = it.avatar_url?:""
-                                    )
 
+                            if (response.data?.items?.isNotEmpty() == true){
+                                hideInitialStateRes()
+                                hideProgressBar()
+                                hideErrorRes()
+
+                                response.data.let { dtoData ->
+                                    usersAdapter.usersResponse = dtoData.items.toList().map {
+                                        UsersResponse(
+                                            id = it.id ?: 0,
+                                            login = it.login?: "",
+                                            profilePicture = it.avatar_url?:""
+                                        )
+
+                                    }
+                                    val totalPages = dtoData.total_count / QUERY_PAGE_SIZE + 2
+                                    isLastPage = viewModel.pageNumber == totalPages
                                 }
+                            }else{
+                                hideInitialStateRes()
+                                hideProgressBar()
+                                usersAdapter.usersResponse = emptyList()
+                                showErrorRes()
+
                             }
+
+
                         }
 
                         is Resource.Error -> {
-                            hideProgressBar()
                             hideInitialStateRes()
-                            response.message?.let {
-                                Snackbar.make(binding.root, "An error occurred: Caused by: $it", Snackbar.LENGTH_LONG).show()
-                            }
-                            if (response.message == "User not found"){
-                                showErrorRes()
-                            }
+                            hideProgressBar()
+                            Snackbar.make(
+                                binding.root,
+                                "Cannot fetch more data at this time: API rate limit exceeded",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
 
                         is Resource.Loading -> {
@@ -94,15 +111,19 @@ class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClic
         binding.recyclerView.apply {
             adapter = usersAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addOnScrollListener(this@UsersFragment.scrollListener)
         }
     }
 
     private fun showProgressBar(){
         binding.progressBar2.visibility = View.VISIBLE
+        isLoading = true
     }
 
     private fun hideProgressBar(){
         binding.progressBar2.visibility = View.GONE
+        isLoading = false
+
     }
 
     private fun hideInitialStateRes(){
@@ -126,6 +147,49 @@ class UsersFragment : Fragment(R.layout.fragment_users), UsersAdapter.OnItemClic
 
     override fun onNavToUserDetails(position: Int) {
         findNavController().navigate(R.id.action_usersFragment_to_userDetailsFragment)
+    }
+
+
+    var isLoading = false
+    var isLastPage = false
+    var isScrolling = false
+
+    var scrollListener = object : RecyclerView.OnScrollListener(){
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+
+            if (newState== AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                isScrolling = true
+            }
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+
+            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
+            val isNotAtBeginning = firstVisibleItemPosition >= 0
+            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
+
+            val shouldPaginate =
+                isNotLoadingAndNotLastPage &&
+                        isAtLastItem &&
+                        isNotAtBeginning &&
+                        isTotalMoreThanVisible &&
+                        isScrolling
+
+
+            if(shouldPaginate) {
+                viewModel.searchUsers(binding.editText2.text.trim().toString())
+                isScrolling = false
+            }
+
+
+        }
     }
 
 
