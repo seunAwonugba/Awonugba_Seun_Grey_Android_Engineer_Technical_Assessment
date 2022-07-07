@@ -11,10 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.greyandroidengineertechnicalassessment.R
+import com.example.greyandroidengineertechnicalassessment.adapter.DetailsRepoAdapter
 import com.example.greyandroidengineertechnicalassessment.databinding.FragmentUserDetailsBinding
 import com.example.greyandroidengineertechnicalassessment.databinding.FragmentUsersBinding
+import com.example.greyandroidengineertechnicalassessment.utils.Resource
 import com.example.greyandroidengineertechnicalassessment.viewmodel.SearchUsersViewModel
 import com.example.greyandroidengineertechnicalassessment.viewmodel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -26,12 +29,15 @@ class UserDetailsFragment : Fragment(R.layout.fragment_user_details) {
     private var _binding: FragmentUserDetailsBinding? = null
     private val binding get() = _binding!!
 
+    lateinit var detailsRepoAdapter: DetailsRepoAdapter
+
     private val viewModel : UserViewModel by viewModels()
     private val args : UserDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentUserDetailsBinding.bind(view)
+        setUpRecyclerView()
         binding.imageView.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -52,6 +58,17 @@ class UserDetailsFragment : Fragment(R.layout.fragment_user_details) {
             }
 
         })
+
+    }
+
+
+    private fun setUpRecyclerView(){
+        detailsRepoAdapter = DetailsRepoAdapter()
+        binding.repoRv.apply {
+            adapter = detailsRepoAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
     }
 
     override fun onDestroy() {

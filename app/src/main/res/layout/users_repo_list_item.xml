@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -20,7 +21,61 @@
             android:padding="8dp">
 
 
+            <TextView
+                android:id="@+id/details_first_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="Aster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/details_last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Discord-player"
+                app:layout_constraintStart_toEndOf="@+id/details_first_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/repo_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Complete framework to simplify the implementation of music commands using discord.js"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/details_first_name" />
+
+            <TextView
+                android:id="@+id/forkedFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Forked from discordify"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repo_description" />
+
+            <TextView
+                android:id="@+id/update_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Updated 4 days ago"
+                app:layout_constraintBottom_toBottomOf="@+id/forkedFrom"
+                app:layout_constraintStart_toEndOf="@+id/forkedFrom"
+                app:layout_constraintTop_toTopOf="@+id/forkedFrom" />
+
+            <TextView
+                android:id="@+id/public_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Public"
+                app:layout_constraintBottom_toBottomOf="@+id/details_last_name"
+                app:layout_constraintStart_toEndOf="@+id/details_last_name"
+                app:layout_constraintTop_toTopOf="@+id/details_last_name"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
