@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greyandroidengineertechnicalassessment.remote.repository.usersrepo.UsersRepositoryResponseDto
+import com.example.greyandroidengineertechnicalassessment.remote.userdetails.UserDetailsResponseDto
 import com.example.greyandroidengineertechnicalassessment.repository.MainRepository
 import com.example.greyandroidengineertechnicalassessment.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,20 @@ class UserRepositoryViewModel @Inject constructor(
     private val _state : MutableLiveData<Resource<UsersRepositoryResponseDto>> = MutableLiveData()
     var state : LiveData<Resource<UsersRepositoryResponseDto>> = _state
 
+    private val _details : MutableLiveData<Resource<UserDetailsResponseDto>> = MutableLiveData()
+    var details : LiveData<Resource<UserDetailsResponseDto>> = _details
+
+
+    fun getUserDetails(userName: String){
+        viewModelScope.launch {
+            _details.postValue(Resource.Loading())
+            val response = mainRepository.getUser(userName = userName)
+            _details.postValue(handleUserDetailsResponse(response))
+
+
+        }
+    }
+
 
 
     fun getUsersRepo(userName : String) = viewModelScope.launch {
@@ -29,6 +44,15 @@ class UserRepositoryViewModel @Inject constructor(
     }
 
     private fun handleUserRepoResponse(response : Response<UsersRepositoryResponseDto>) : Resource<UsersRepositoryResponseDto>{
+        if (response.isSuccessful){
+            response.body()?.let { data->
+                return Resource.Success(data)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleUserDetailsResponse(response : Response<UserDetailsResponseDto>) : Resource<UserDetailsResponseDto>{
         if (response.isSuccessful){
             response.body()?.let { data->
                 return Resource.Success(data)

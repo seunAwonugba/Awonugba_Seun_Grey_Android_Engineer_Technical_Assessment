@@ -10,18 +10,18 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject
 
-@HiltViewModel
-class UserViewModel @Inject constructor(
-    private var mainRepository: MainRepository
-) : ViewModel() {
-
-    var state : MutableLiveData<Response<UserDetailsResponseDto>> = MutableLiveData()
-
-    fun getUserDetails(userName : String){
-        viewModelScope.launch {
-            val response = mainRepository.getUser(userName = userName)
-            state.value = response
-        }
-    }
-
-}
+//@HiltViewModel
+//class UserViewModel @Inject constructor(
+//    private var mainRepository: MainRepository
+//) : ViewModel() {
+//
+//    var state : MutableLiveData<Response<UserDetailsResponseDto>> = MutableLiveData()
+//
+//    fun getUserDetails(userName : String){
+//        viewModelScope.launch {
+//            val response = mainRepository.getUser(userName = userName)
+//            state.value = response
+//        }
+//    }
+//
+//}
