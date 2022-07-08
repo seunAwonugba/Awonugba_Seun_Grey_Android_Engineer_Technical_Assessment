@@ -29,6 +29,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/pexels_vietnam_photographer_11293709" />
 
+            <TextView
+                android:id="@+id/firstName"
+                android:layout_width="50dp"
+                android:ellipsize="marquee"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="firstName"
+                android:textColor="#62006A"
+                app:layout_constraintBottom_toBottomOf="@+id/details_profile_image"
+                app:layout_constraintStart_toEndOf="@+id/details_profile_image"
+                app:layout_constraintTop_toTopOf="@+id/details_profile_image"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/description"
@@ -43,12 +55,12 @@
                 android:id="@+id/language"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ellipsize="marquee"
-                android:singleLine="true"
                 android:text="Component"
+                android:ellipsize="marquee"
+                app:layout_constraintBottom_toBottomOf="@+id/firstName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/firstName"
+                android:singleLine="true" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -64,10 +76,10 @@
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/firstName"
                 app:layout_constraintEnd_toStartOf="@+id/star"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/firstName"
                 app:srcCompat="@drawable/star" />
 
             <TextView
@@ -82,6 +94,17 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView3"
                 android:singleLine="true" />
 
+            <TextView
+                android:id="@+id/lastName"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="lastName"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/firstName"
+                app:layout_constraintStart_toEndOf="@+id/firstName"
+                app:layout_constraintTop_toTopOf="@+id/firstName" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
