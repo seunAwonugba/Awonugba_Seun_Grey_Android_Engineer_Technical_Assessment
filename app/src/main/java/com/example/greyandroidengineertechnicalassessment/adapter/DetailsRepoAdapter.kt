@@ -15,7 +15,6 @@ class DetailsRepoAdapter : RecyclerView.Adapter<DetailsRepoAdapter.DetailsRepoVi
     inner class DetailsRepoViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
 
         var firstName : TextView = itemView.findViewById(R.id.details_first_name)
-        var lastName : TextView = itemView.findViewById(R.id.lastName)
         var forkedFrom : TextView = itemView.findViewById(R.id.forkedFrom)
         var updateTime : TextView = itemView.findViewById(R.id.update_time)
         var description : TextView = itemView.findViewById(R.id.repo_description)
@@ -54,7 +53,6 @@ class DetailsRepoAdapter : RecyclerView.Adapter<DetailsRepoAdapter.DetailsRepoVi
         val usersRepo = differ.currentList[position]
         val fullName = usersRepo.fullName.split("/")
         holder.firstName.text = "${fullName[0]}/"
-        holder.lastName.text = fullName[0]
         holder.description.text = usersRepo.description
         holder.forkedFrom.text = usersRepo.forkedFrom
         holder.updateTime.text = usersRepo.update

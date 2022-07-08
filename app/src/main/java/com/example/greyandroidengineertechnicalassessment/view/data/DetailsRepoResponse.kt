@@ -10,5 +10,5 @@ data class DetailsRepoResponse(
     val public : String,
     val star : String,
     val language : String,
-    val fullName : String
+    val fullName : String = ""
 )

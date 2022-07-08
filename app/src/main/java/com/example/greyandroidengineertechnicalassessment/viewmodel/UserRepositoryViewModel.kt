@@ -18,8 +18,8 @@ class UserRepositoryViewModel @Inject constructor(
     private var mainRepository: MainRepository
 ) : ViewModel() {
 
-    private val _state : MutableLiveData<Resource<UsersRepositoryResponseDto>> = MutableLiveData()
-    var state : LiveData<Resource<UsersRepositoryResponseDto>> = _state
+    private val _repo : MutableLiveData<Resource<UsersRepositoryResponseDto>> = MutableLiveData()
+    var repo : LiveData<Resource<UsersRepositoryResponseDto>> = _repo
 
     private val _details : MutableLiveData<Resource<UserDetailsResponseDto>> = MutableLiveData()
     var details : LiveData<Resource<UserDetailsResponseDto>> = _details
@@ -38,9 +38,9 @@ class UserRepositoryViewModel @Inject constructor(
 
 
     fun getUsersRepo(userName : String) = viewModelScope.launch {
-        _state.postValue(Resource.Loading())
+        _repo.postValue(Resource.Loading())
         val response = mainRepository.getUserRepository(userName = userName)
-        _state.postValue(handleUserRepoResponse(response))
+        _repo.postValue(handleUserRepoResponse(response))
     }
 
     private fun handleUserRepoResponse(response : Response<UsersRepositoryResponseDto>) : Resource<UsersRepositoryResponseDto>{

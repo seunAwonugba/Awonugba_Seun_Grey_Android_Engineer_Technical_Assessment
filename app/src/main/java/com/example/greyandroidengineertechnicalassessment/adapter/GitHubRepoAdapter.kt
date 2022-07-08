@@ -19,8 +19,6 @@ class GitHubRepoAdapter : RecyclerView.Adapter<GitHubRepoAdapter.GitHubRepoViewH
     ) : RecyclerView.ViewHolder(itemView){
 
         var profileImage : ImageView = itemView.findViewById(R.id.details_profile_image)
-        var firstName : TextView = itemView.findViewById(R.id.firstName)
-        var lastName : TextView = itemView.findViewById(R.id.lastName)
         var star : TextView = itemView.findViewById(R.id.star)
         var language : TextView = itemView.findViewById(R.id.language)
         var description : TextView = itemView.findViewById(R.id.description)
@@ -60,8 +58,6 @@ class GitHubRepoAdapter : RecyclerView.Adapter<GitHubRepoAdapter.GitHubRepoViewH
         val gitHubRepoData = differ.currentList[position]
         val fullName = gitHubRepoData.fullName.split("/")
         holder.profileImage.load(gitHubRepoData.profilePicture)
-        holder.firstName.text = "${fullName[0]}/"
-        holder.lastName.text = fullName[1]
         holder.star.text = gitHubRepoData.star.toString()
         holder.language.text = gitHubRepoData.language
         holder.description.text = gitHubRepoData.description
